@@ -1,8 +1,8 @@
-#Habit Tracker CLI Application
+# Habit Tracker CLI Application
 
 I'm glat to greet you in the the Habit Tracker CLI App! This is a simple and powerful command-line interface application designed to help you build and maintain consistent habits. You can track daily, weekly, or monthly goals, and analyse your progress with streak calculation functioanality.
 
-##Table of Contents
+## Table of Contents
 
 * [Features](#features)
 * [How It Works](#how-it-works)
@@ -20,7 +20,7 @@ I'm glat to greet you in the the Habit Tracker CLI App! This is a simple and pow
 * [Contributing](#contributing)
 * [License](#license)
 
-##Features
+## Features
 **Various Habit Definition:** Create habits with daily, weekly, or monthly periodicities.
 
 **Command Line Interface:** Easy-to-use numbered menu system for all interactions.
@@ -34,7 +34,7 @@ I'm glat to greet you in the the Habit Tracker CLI App! This is a simple and pow
 **Data Storage:** All the habit data is saved locally in a JSON file.
 
 
-##How It Works
+## How It Works
 * `habit.py`: Defines the `Habit` class, representing individual habits with their attributes and methods.
     
 * `habit_tracker.py`: Defines the `HabitTracker` class, which manages a collection of `Habit` objects and provides opportunity to analyse their data.
@@ -42,13 +42,13 @@ I'm glat to greet you in the the Habit Tracker CLI App! This is a simple and pow
 * `main.py`: The main entry point for the CLI and user intaraction with the program, loading/saving data, and calling methods from `HabitTracker`.
 
 
-##Getting Started
+## Getting Started
 Follow these steps to set up and run the Habit Tracker App on your local machine.
 
-###Prerequisites
+### Prerequisites
 * Python 3.6 or higher installed on your system.
 
-###Installation
+### Installation
 1. Clone the repository:
 
 ```
@@ -58,11 +58,11 @@ https://github.com/Mijdilev/Habit-Tracking-Application-CLI-Python-OOP/
 
 This project uses standard python libraries. You can install them via pip if you don't have them already (e.g. pytest)
 
-###Running the Application
+### Running the Application
 
 Run `main.py` file.
 
-##Usage
+## Usage
 Upon running the application, you'll see the main menu:
 
 ```
@@ -77,7 +77,7 @@ Habit Tracker Menu:
 7. Edit/Delete Habit
 8. Quit
 ```
-###Adding a Habit (Option 1)
+### Adding a Habit (Option 1)
 1. Select 1 from the main menu.
 
 2. Enter the habit's name.
@@ -86,7 +86,7 @@ Habit Tracker Menu:
 
 4. Choose the start date option (`1` for Current Date, `2` for Custom Date).
 
-###Marking a Habit as Completed (Option 2)
+### Marking a Habit as Completed (Option 2)
 1. Select 2 from the main menu.
 
 2. A numbered list of your habits will be displayed. Enter the number of the habit you wish to mark.
@@ -95,17 +95,17 @@ Habit Tracker Menu:
 
 *Note:* The app will prevent you from marking a habit as completed multiple times within its defined period (e.g., you can't mark a "daily" habit complete twice on the same day).
 
-###Listing Habits (Options 3 & 4)
+### Listing Habits (Options 3 & 4)
 * List All Habits (Option 3): Displays every habit you are tracking, along with their data.
 
 * List Habits by Periodicity (Option 4): You need to select for which periodicity you want to list your habits, then program displays all habits with choosen periodicity.
 
-###Checking Streaks (Options 5 & 6)
+### Checking Streaks (Options 5 & 6)
 * Get Longest Streak for All Habits (Option 5): Shows the single longest consecutive streak across all your habits.
 
 * Get Longest Streak for a Habit (Option 6): You need to select a specific habit by typing its number and then app will display its longest streak, specifying the unit (days, weeks, or months).
 
-###Editing/Deleting a Habit (Option 7)
+### Editing/Deleting a Habit (Option 7)
 1. Select 7 from the main menu.
 
 2. A numbered list of your habits will be displayed. Enter the number of the habit you wish to modify or delete.
@@ -117,5 +117,5 @@ Habit Tracker Menu:
    * If Deleting: You'll be asked for confirmation before the habit is permanently removed.
 
   
-##License
+## License
 This project is licensed under the MIT License - see the [LICENSE](https://github.com/Mijdilev/Habit-Tracking-Application-CLI-Python-OOP/blob/main/LICENSE) file for details.
