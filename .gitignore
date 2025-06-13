@@ -1,0 +1,10 @@
+# Operating System Files
+.DS_Store # macOS
+Thumbs.db # Windows
+
+# Testing cache files
+.pytest_cache/
+
+# Local data file for storing habits data
+habits.json
+
