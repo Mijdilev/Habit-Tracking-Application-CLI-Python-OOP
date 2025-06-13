@@ -17,7 +17,8 @@ I'm glat to greet you in the the Habit Tracker CLI App! This is a simple and pow
   * [Listing Habits](#listing-habits)
   * [Checking Streaks](#checking-streaks)
   * [Editing/Deleting a Habit](#editingdeleting-a-habit)
-* [Contributing](#contributing)
+* [Pytest Unit tests](#pytest-unit-tests)
+* [Predifined habits data](#predefined-habits-data)
 * [License](#license)
 
 ## Features
@@ -116,6 +117,13 @@ Habit Tracker Menu:
 
    * If Deleting: You'll be asked for confirmation before the habit is permanently removed.
 
-  
+### Pytest Unit tests
+Inside the `tests` folder the pytest files `test_habit.py` and `test_habit_tracker.py` for testing the functionality of components `habit.py` and `habit_tracker.py` are contained.
+
+### Predefined habits data
+The application already have created `habits.json` file with predefined habit data for five habits with different periodicities for testing the functionality of the program.
+
+*Note:* You can remove this data by deleting these habits or the json file. The program should create a new one automatically.
+
 ## License
 This project is licensed under the MIT License - see the [LICENSE](https://github.com/Mijdilev/Habit-Tracking-Application-CLI-Python-OOP/blob/main/LICENSE) file for details.
