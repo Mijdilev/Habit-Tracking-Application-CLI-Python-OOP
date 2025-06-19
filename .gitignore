@@ -5,6 +5,14 @@ Thumbs.db # Windows
 # Testing cache files
 .pytest_cache/
 
+# Python cache files
+__pycache__/
+
+# Dependency files
+.Python
+pip-log.txt
+pip-delete-this-arg.txt
+
 # Local data file for storing habits data
 habits.json
 

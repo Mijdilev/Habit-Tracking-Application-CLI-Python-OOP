@@ -1,5 +1,3 @@
-# test_habit_tracker.py
-
 import pytest
 from datetime import datetime, timedelta
 from habit import Habit
@@ -47,39 +45,48 @@ def test_get_longest_streak_all_habits(tracker, sample_habit):
 
 
 def test_get_longest_streak_for_habit(tracker, sample_habit):
+    # Mark a habit as completed on its start date
     sample_habit.mark_completed(sample_habit.start_date)
+    # Verify the longest streak for this specific habit
     assert tracker.get_longest_streak_for_habit("Exercise") == 1
 
 
 def test_get_longest_streak_for_unknown_habit(tracker):
+    # Test behavior when trying to get streak for a habit that doesn't exist
     assert tracker.get_longest_streak_for_habit("NonExistent") == 0
 
 
 def test_edit_habit(tracker):
     new_start = datetime.today()
+    # Edit the existing habit with new parameters
     tracker.edit_habit("Exercise", new_name="Workout", new_periodicity="weekly", new_start_date=new_start)
     habit = tracker.get_all_habits()[0]
+    # Verify that the habit's parameters were updated correctly
     assert habit.name == "Workout"
     assert habit.periodicity == "weekly"
     assert habit.start_date == new_start
 
 
 def test_edit_habit_invalid_name(tracker):
+    # Test error when trying to edit with an invalid or empty name
     with pytest.raises(ValueError):
         tracker.edit_habit("Exercise", new_name="")
 
 
 def test_edit_nonexistent_habit(tracker):
+    # Ensure error is raised when trying to edit a habit that doesn't exist
     with pytest.raises(ValueError):
         tracker.edit_habit("NonExistent", new_name="NewName")
 
 
 def test_delete_habit(tracker):
+    # Delete a habit and check if it's removed from the tracker
     tracker.delete_habit("Exercise")
     assert tracker.get_all_habits() == []
 
 
 def test_delete_nonexistent_habit(tracker):
+    # Expect an error when trying to delete a habit that doesn't exist
     with pytest.raises(ValueError):
         tracker.delete_habit("Unknown")
 
@@ -91,6 +98,7 @@ def test_to_json(tracker):
 
 
 def test_from_json():
+    # Create a sample data dictionary representing habits in JSON format
     data = {
         "habits": [
             {

@@ -1,17 +1,21 @@
 # Habit Tracker CLI Application
 
-I'm glat to greet you in the the Habit Tracker CLI App! This is a simple and powerful command-line interface application designed to help you build and maintain consistent habits. You can track daily, weekly, or monthly goals, and analyse your progress with streak calculation functioanality.
+Welcome to Habit Tracker CLI! This console application helps you build and track beneficial habits. Monitor your goals on a daily, weekly, or monthly basis, analyze your progress, and stay motivated through streak tracking.
+
 
 ## Table of Contents
 
 * [Features](#features)
 * [How It Works](#how-it-works)
-* [Getting Started](#getting-started)
-  * [Prerequisites](#prerequisites)
-  * [Installation](#installation)
-  * [Running the Application](#running-the-application)
+* [Installation](#installation)
+  * [Requirements](#requirements)
+  * [Step-by-Step Installation](#steb-by-step-istallation)
 * [Usage](#usage)
-* [Pytest Unit tests](#pytest-unit-tests)
+  * [Running the Application](#running-the-application)
+  * [Main menu](#main-menu)
+  * [Basic Operations](#basic-operations)
+* [Pytest Unit Tests](#pytest-unit-tests)
+* [Error Handling](#error-handling)
 * [Predifined habits data](#predefined-habits-data)
 * [License](#license)
 
@@ -37,28 +41,33 @@ I'm glat to greet you in the the Habit Tracker CLI App! This is a simple and pow
 * `main.py`: The main entry point for the CLI and user intaraction with the program, loading/saving data, and calling methods from `HabitTracker`.
 
 
-## Getting Started
-Follow these steps to set up and run the Habit Tracker App on your local machine.
+## Istallation
 
-### Prerequisites
-* Python 3.6 or higher installed on your system.
+### Requirements
 
-### Installation
+* Python 3.10
+* virtualenv (for dependency management)
+
+### Steb-by-Step Istallation
+
 1. Clone the repository:
 
 ```
 https://github.com/Mijdilev/Habit-Tracking-Application-CLI-Python-OOP/
 ```
+or use codespace on GitHub and create codespace on main.
 
+2. This project uses standard python libraries. You can install them via pip if you don't have them already in your venv (e.g. pytest)
 
-This project uses standard python libraries. You can install them via pip if you don't have them already (e.g. pytest)
+## Usage
 
 ### Running the Application
 
 Run `main.py` file.
 
-## Usage
-Upon running the application, you'll see the main menu:
+### Main menu
+
+Here is the menu that will be displayed after you run the main file:
 
 ```
 Main Menu
@@ -72,50 +81,44 @@ Habit Tracker Menu:
 7. Edit/Delete Habit
 8. Quit
 ```
-### Adding a Habit (Option 1)
-1. Select 1 from the main menu.
+### Basic Operations
 
-2. Enter the habit's name.
+1. **Adding a Habit**:
+    - Select option 1
+    - Enter the habit name
+    - Choose periodicity
+    - Set start date
 
-3. Choose its periodicity by number (`1` for Daily, `2` for Weekly, `3` for Monthly).
+2. **Marking Completion**:
+    - Select option 2 
+    - Choose a habit from the list
+    - Specify completion date
 
-4. Choose the start date option (`1` for Current Date, `2` for Custom Date).
+3. **Viewing Statistics**:
+    - Option 3: all habits
+    - Option 4: filter by periodicity
+    - Option 5: longest streak across all habits
+    - Option 6: longest streak for specific habit
+4. **Managing Habits**:
+    - Option 7: edit or delete existing habits
+    - Modify habit name, periodicity, or start date
+    - Remove unwanted habits
 
-### Marking a Habit as Completed (Option 2)
-1. Select 2 from the main menu.
-
-2. A numbered list of your habits will be displayed. Enter the number of the habit you wish to mark.
-
-3. Choose the completion date option (`1` for Current Date, `2` for Custom Date).
-
-*Note:* The app will prevent you from marking a habit as completed multiple times within its defined period (e.g., you can't mark a "daily" habit complete twice on the same day).
-
-### Listing Habits (Options 3 & 4)
-* List All Habits (Option 3): Displays every habit you are tracking, along with their data.
-
-* List Habits by Periodicity (Option 4): You need to select for which periodicity you want to list your habits, then program displays all habits with choosen periodicity.
-
-### Checking Streaks (Options 5 & 6)
-* Get Longest Streak for All Habits (Option 5): Shows the single longest consecutive streak across all your habits.
-
-* Get Longest Streak for a Habit (Option 6): You need to select a specific habit by typing its number and then app will display its longest streak, specifying the unit (days, weeks, or months).
-
-### Editing/Deleting a Habit (Option 7)
-1. Select 7 from the main menu.
-
-2. A numbered list of your habits will be displayed. Enter the number of the habit you wish to modify or delete.
-
-3. Choose whether to 1. Edit Habit or 2. Delete Habit.
-
-   * If Editing: You'll be prompted for a new name (press Enter to keep old), new periodicity (select by number, or 1 to keep old), and new start date (select by number, or 1 to keep old).
-
-   * If Deleting: You'll be asked for confirmation before the habit is permanently removed.
 
 ### Pytest Unit tests
 Inside the `tests` folder the pytest files `test_habit.py` and `test_habit_tracker.py` for testing the functionality of components `habit.py` and `habit_tracker.py` are contained.
 
+To run the tests, open them in terminal and input: "pytest test_habit.py" or "pytest test_habit_tracker" and press "Enter" to see the results.
+
+### Error Handling
+The application includes error handling for:
+* Invalid inpupt validation
+* Date format verification
+* File operations
+* Duplicate entries prevention
+
 ### Predefined habits data
-The application already have created `habits.json` file with predefined habit data for five habits with different periodicities for testing the functionality of the program.
+The application comes with a pre-configured set of test habits in `habits.json` . 
 
 *Note:* You can remove this data by deleting these habits or the json file. The program should create a new one automatically.
 

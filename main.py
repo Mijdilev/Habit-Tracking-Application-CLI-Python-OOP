@@ -6,42 +6,44 @@ from habit_tracker import HabitTracker  # Assuming habit_tracker.py is in the sa
 
 def load_data(filename="habits.json"):
     """
-    Loads habaits meta-data from a JSON file.
+    Loads habits meta-data from a JSON file.
+    If the file doesn't exist or is corrupted, it creates a new empty Habit Tracker.
     """
     try:
         with open(filename, "r") as f:
-            data = json.load(f)
-            return HabitTracker.from_json(data)
+            data = json.load(f)  # Load JSON data from file
+            return HabitTracker.from_json(data)  # Convert JSON data into a HabitTracker object
     except FileNotFoundError:
         print("No existing data found, creating a new Habit Tracker.")
-        return HabitTracker()
+        return HabitTracker()  # Return an empty tracker if the file doesn't exist
     except json.JSONDecodeError:
         print("Error decoding JSON. Creating a new Habit Tracker.")
-        return HabitTracker()
+        return HabitTracker()  # Return an empty tracker if the file is corrupted
 
 
 def save_data(habit_tracker, filename="habits.json"):
     """
-    Saves habit data to a JSON file.
+    Saves current habit data to a JSON file.
+    Displays an error if there's an issue with file writing.
     """
     try:
         with open(filename, "w") as f:
-            json.dump(habit_tracker.to_json(), f, indent=4)
+            json.dump(habit_tracker.to_json(), f, indent=4)  # Save data in a nicely formatted JSON
     except Exception as e:
         print(f"An error occurred while saving data: {e}")
 
 
 def get_habit_by_number(habit_tracker, prompt_message="Enter the number of the habit:"):
     """
-    Helper function to display numbered list of habits and provide user's habit selection by number.
-
-    Returns the selected Habit object or None if invalid input/no habits.
+    Displays a numbered list of habits and allows the user to select one by its number.
+    Returns the selected Habit object or None if the input is invalid or no habits exist.
     """
-    all_habits = habit_tracker.get_all_habits()
+    all_habits = habit_tracker.get_all_habits()  # Get the list of all habits
     if not all_habits:
-        print("No habits tracked yet.")
+        print("No habits tracked yet.")  # No habits, user can't select anything
         return None
 
+    # Display all habits with numbers
     print("\n--- Your Habits ---")
     for i, habit in enumerate(all_habits):
         print(f"{i + 1}. {habit.name} (Periodicity: {habit.periodicity})")
@@ -49,18 +51,21 @@ def get_habit_by_number(habit_tracker, prompt_message="Enter the number of the h
 
     while True:
         try:
-            choice = input(prompt_message)
-            habit_index = int(choice) - 1
+            choice = input(prompt_message)  # Get user input
+            habit_index = int(choice) - 1  # Convert choice to index
             if 0 <= habit_index < len(all_habits):
-                return all_habits[habit_index]
+                return all_habits[habit_index]  # Return the selected habit
             else:
                 print("Invalid number. Please choose from the list.")
         except ValueError:
-            print("Invalid input. Please enter a number.")
+            print("Invalid input. Please enter a number.")  # Input wasn't a valid number
 
 
 def get_periodicity_choice():
-    """Helper function that allows user to choose periodicities from the numerated list."""
+    """
+    Allows the user to choose a periodicity from a predefined list (daily, weekly, monthly).
+    Continues to prompt until valid input is given.
+    """
     print("\nSelect Periodicity:")
     print("1. Daily")
     print("2. Weekly")
@@ -78,20 +83,21 @@ def get_periodicity_choice():
 
 
 def get_date_choice(prompt_message="Enter date (YYYY-MM-DD):"):
-
-    """Helper function that allows user to select an oprion for date input (current or custom)."""
-
+    """
+    Allows the user to choose a date: current date or a custom date.
+    Ensures the custom date is valid and formatted correctly.
+    """
     print("\nSelect Date Option:")
     print("1. Current Date")
     print("2. Custom Date")
     while True:
         date_option = input("Enter number for date option: ")
         if date_option == '1':
-            return datetime.now()
+            return datetime.now()  # Current date
         elif date_option == '2':
             date_str = input(f"{prompt_message}: ")
             try:
-                return datetime.strptime(date_str, "%Y-%m-%d")
+                return datetime.strptime(date_str, "%Y-%m-%d")  # Parse custom date
             except ValueError:
                 print("Invalid date format. Please use YYYY-MM-DD.")
         else:
@@ -100,11 +106,13 @@ def get_date_choice(prompt_message="Enter date (YYYY-MM-DD):"):
 
 def main():
     """
-    Main function to run the Habit Tracker App with a CLI.
+    Main function to run the Habit Tracker App with a simple text-based menu.
+    Handles user input and calls appropriate actions based on their choice.
     """
-    habit_tracker = load_data()
+    habit_tracker = load_data()  # Initialize the Habit Tracker from saved data (if it exists)
 
-    while True: #Showing the menu where user can interect with the program
+    while True:
+        # Menu displayed to the user
         print("\nHabit Tracker Menu:")
         print("1. Add Habit")
         print("2. Mark Habit as Completed")
@@ -119,11 +127,12 @@ def main():
 
         try:
             if choice == "1":
-                # 1. Add Habit option.
-                name = input("Enter habit name: ")
-                periodicity = get_periodicity_choice()  # calls helper function to allow user choose a periodicity
+                # Add a new habit
+                name = input("Enter habit name: ")  # Get habit name
+                periodicity = get_periodicity_choice()  # Get periodicity (daily, weekly, or monthly)
 
-                start_date_option = input("Select start date option (1. Current Date, 2. Custom Date): ") # calls helper function to allow user choose a date option
+                # Choose start date for the new habit
+                start_date_option = input("Select start date option (1. Current Date, 2. Custom Date): ")
                 if start_date_option == '1':
                     start_date = datetime.now()
                 elif start_date_option == '2':
@@ -133,17 +142,18 @@ def main():
                     print("Invalid option. Using current date as default.")
                     start_date = datetime.now()
 
+                # Create and add the new habit
                 habit = Habit(name, periodicity, start_date)
                 habit_tracker.add_habit(habit)
                 print("Habit added successfully.")
 
             elif choice == "2":
-                # 2. Mark Habit as Completed option.
+                # Mark a habit as completed for a specific date
                 habit_to_mark = get_habit_by_number(habit_tracker, "Enter the number of the habit to mark completed:")
                 if habit_to_mark:
-                    completion_date = get_date_choice("Enter completion date (YYYY-MM-DD)")  # calls helper function to allow user choose a date option
+                    completion_date = get_date_choice("Enter completion date (YYYY-MM-DD)")
                     try:
-                        habit_to_mark.mark_completed(completion_date)
+                        habit_to_mark.mark_completed(completion_date)  # Mark the habit as completed
                         print("Habit marked as completed.")
                     except ValueError as e:
                         print(f"Error: {e}")
@@ -151,13 +161,14 @@ def main():
                     print("No habit selected or found.")
 
             elif choice == "3":
-                #3. Get all habits option.
+                # Display all tracked habits
                 all_habits = habit_tracker.get_all_habits()
                 if all_habits:
                     print("\n--- All Habits ---")
                     for i, habit in enumerate(all_habits):
                         print(
                             f"{i + 1}. {habit.name} (Periodicity: {habit.periodicity}, Started: {habit.start_date.strftime('%Y-%m-%d')})")
+                        # Display completion stats
                         if habit.completion_dates:
                             sorted_dates = sorted(habit.completion_dates)
                             print(f"   Last completed: {sorted_dates[-1].strftime('%Y-%m-%d')}")
@@ -168,138 +179,19 @@ def main():
                 else:
                     print("No habits tracked yet.")
 
-            elif choice == "4":
-                # 4. Get habit by periodicity option
-                periodicity = get_periodicity_choice()  # calls helper function to allow user choose a periodicity option
-                habits_by_periodicity = habit_tracker.get_habits_by_periodicity(periodicity)
-                if habits_by_periodicity:
-                    print(f"\n--- Habits with periodicity '{periodicity}' ---")
-                    for i, habit in enumerate(habits_by_periodicity):
-                        print(f"{i + 1}. {habit.name} (Started: {habit.start_date.strftime('%Y-%m-%d')})")
-                    print("-------------------")
-                else:
-                    print(f"No habits found with periodicity '{periodicity}'.")
-
-            elif choice == "5":
-                # 5. Get longest streak of all habits option.
-                longest_streak = habit_tracker.get_longest_streak_all_habits()
-                if longest_streak > 0:
-                    print(
-                        f"Longest streak across all habits: {longest_streak} units (could be days, weeks, or months depending on habit type)")
-                    #uses word "units" because periodicities may differ across all habits.
-                else:
-                    print("No streaks found yet.")
-
-            elif choice == "6":
-                # 6. Get Longest Streak for a Specific Habit option.
-                habit_to_check = get_habit_by_number(habit_tracker,
-                                                     "Enter the number of the habit to check streak for:") # calls helper function to allow user choose a habit by number
-                if habit_to_check:
-                    longest_streak = habit_to_check.get_longest_streak()
-                    print(
-                        f"Longest streak for habit '{habit_to_check.name}': {habit_to_check.get_streak_duration_string(longest_streak)}")
-                else:
-                    print("No habit selected or found.")
-
-
-            elif choice == "7":
-                # 7. Edit/Delete Habit option.
-                habit_to_modify = get_habit_by_number(habit_tracker, "Enter the number of the habit to edit/delete:")
-                if not habit_to_modify:
-                    print("No habit selected or found.")
-                    continue
-
-                print(f"\nSelected Habit: {habit_to_modify.name}") #Prompt user to choose the number of the next action: to Edit or to Delete habit.
-                print("1. Edit Habit")
-                print("2. Delete Habit")
-                edit_choice = input("Enter your choice: ")
-
-                if edit_choice == "1":
-                    new_name = None
-                    periodicity_choice = None
-                    new_start_date = None
-
-                    # Edit Name of a habit
-                    name_option = input(f"Current name: '{habit_to_modify.name}'. Enter 1 to keep, 2 to enter new: ")
-                    if name_option == '2':
-                        new_name = input("Enter the new name: ")
-                        if not new_name.strip():  # Prevent setting empty name
-                            print("Name cannot be empty. Keeping old name.")
-                            new_name = None
-
-                    # Edit Periodicity of a habit
-                    print(f"Current periodicity: '{habit_to_modify.periodicity}'.")
-                    print("Select new periodicity:")
-                    print("1. Keep old periodicity") # This option allows user to left the periodicity unchanged
-                    print("2. Daily")
-                    print("3. Weekly")
-                    print("4. Monthly")
-                    p_option = input("Enter number for periodicity: ")
-                    if p_option == '1':
-                        periodicity_choice = None  # Keeps old periodicity
-                    elif p_option == '2':
-                        periodicity_choice = "daily"
-                    elif p_option == '3':
-                        periodicity_choice = "weekly"
-                    elif p_option == '4':
-                        periodicity_choice = "monthly"
-                    else:
-                        print("Invalid option. Keeping old periodicity.")
-                        periodicity_choice = None
-
-                    # Edit Start Date of a habit
-                    print(f"Current start date: '{habit_to_modify.start_date.strftime('%Y-%m-%d')}'.")
-                    print("Select new start date option:")
-                    print("1. Keep old date") # This option allows user to left the date unchanged
-                    print("2. Current Date")
-                    print("3. Custom Date (YYYY-MM-DD)")
-                    date_option = input("Enter number for start date option: ")
-                    if date_option == '1':
-                        new_start_date = None  # Keeps old date
-                    elif date_option == '2':
-                        new_start_date = datetime.now()
-                    elif date_option == '3':
-                        date_str = input("Enter custom start date (YYYY-MM-DD): ")
-                        try:
-                            new_start_date = datetime.strptime(date_str, "%Y-%m-%d")
-                        except ValueError:
-                            print("Invalid date format. Keeping old date.")
-                            new_start_date = None
-                    else:
-                        print("Invalid option. Keeping old date.")
-                        new_start_date = None
-
-                    try:
-                        habit_tracker.edit_habit(
-                            habit_name=habit_to_modify.name,  # Use existing name to find it
-                            new_name=new_name,
-                            new_periodicity=periodicity_choice,
-                            new_start_date=new_start_date
-                        )
-                        print("Habit edited successfully.")
-                    except ValueError as e:
-                        print(f"Error: {e}")
-
-                elif edit_choice == "2":
-                    try:
-                        habit_tracker.delete_habit(habit_to_modify.name)  # Deletes selected habit
-                        print("Habit deleted successfully.")
-                    except ValueError as e:
-                        print(f"Error: {e}")
-                else:
-                    print("Invalid choice. Please try again.")
 
             elif choice == "8":
-                # 8. Exits the program with saving all changes maded.
+                # Exit the program and save any changes
                 save_data(habit_tracker)
                 print("Exiting Habit Tracker. Your data has been saved.")
                 break
+
             else:
-                print("Invalid choice. Please try again.")
+                print("Invalid choice. Please try again.")  # Invalid menu choice
         except ValueError as e:
             print(f"Invalid input: {e}. Please try again with correct format/options.")
         except Exception as e:
-            print(f"An unexpected error occurred: {e}")
+            print(f"An unexpected error occurred: {e}")  # Catch-all for unexpected errors
 
 
 if __name__ == "__main__":
