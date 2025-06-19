@@ -7,7 +7,7 @@ Welcome to Habit Tracker CLI! This console application helps you build and track
 
 * [Features](#features)
 * [How It Works](#how-it-works)
-* [Installation](#installation)
+* [Installation](#istallation)
   * [Requirements](#requirements)
   * [Step-by-Step Installation](#steb-by-step-istallation)
 * [Usage](#usage)
